@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre | Clarity Lab</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="header-main">
+            <button class="menu-toggle" type="button" aria-label="Abrir menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <a class="logo" href="index.html">
+                <img src="assets/images/Mídia.jpeg" alt="Logo">
+            </a>
+
+            <div class="busca">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input id="searchInput" type="search" placeholder="Buscar produtos...">
+            </div>
+
+            <div class="header-actions">
+                <div class="carrinho">
+                    <img src="assets/images/carrinho.png" alt="Carrinho">
+                </div>
+
+                <button class="usuario" id="userButton" type="button" aria-label="Configurar conta do usu�rio">
+                    <img src="assets/images/Úsuario.webp" alt="Usuário">
+                    <span id="userName">Usu�rio</span>
+                </button>
+            </div>
+            <div class="Marca-da-agua">
+            <img src="assets/images/logo 3.png" alt="Marca da água">
+        </div>
+        </div>
+
+        <nav class="menu-mobile" id="menu-mobile">
+            <a href="index.html">Início</a>
+            <a href="BodySplash.html">Body Splashs</a>
+            <a href="cremes.html">Cremes</a>
+            <a href="sabonetes.html">Sabonetes</a>
+            <a href="kits.html">Kits</a>
+            <a href="favoritos.html">Favoritos</a>
+            <a href="sobre.html">Sobre</a>
+        </nav>
+    </header>
+
+    <script src="assets/js/cart.js"></script>
+    <script src="assets/js/search.js"></script>
+    <script>
+        const toggleButton = document.querySelector('.menu-toggle');
+        const mobileMenu = document.querySelector('.menu-mobile');
+
+        if (toggleButton && mobileMenu) {
+            toggleButton.addEventListener('click', () => {
+                const isOpen = mobileMenu.classList.toggle('open');
+                toggleButton.setAttribute('aria-expanded', isOpen);
+            });
+        }
+
+        const userButton = document.querySelector('#userButton');
+        const userName = document.querySelector('#userName');
+
+        function loadUserName() {
+            const savedName = localStorage.getItem('userName');
+            if (savedName && userName) {
+                userName.textContent = savedName;
+            }
+        }
+
+        function updateUserName() {
+            const currentName = localStorage.getItem('userName') || 'Usu�rio';
+            const newName = prompt('Digite o nome da conta:', currentName);
+            if (newName !== null) {
+                const formatted = newName.trim() || 'Usu�rio';
+                localStorage.setItem('userName', formatted);
+                if (userName) {
+                    userName.textContent = formatted;
+                }
+            }
+        }
+
+        if (userButton) {
+            userButton.addEventListener('click', updateUserName);
+        }
+
+        loadUserName();
+    </script>
+
+    <main>
+        <section class="category-section">
+            <div class="category-card">
+                <h1>Sobre Nós</h1>
+                <p>Clarity Lab, ela nasceu da ideia de que beleza também é ciência, cuidado e inovação. Desenvolvemos cosméticos que unem ingredientes selecionados, qualidade e sofisticação para oferecer uma experiência completa de autocuidado.</p>
+                <p>Nossa marca atende pessoas que desejam cuidar da pele e da autoestima sem abrir mão de ingredientes cuidadosamente selecionados e de uma experiência sofisticada.</p>
+            </div>
+            
+        </section>
+    </main> 
+    <div class="category-card">
+                <h1>Nosso Público Alvo
+                </h1>
+                <p>Nosso público-alvo são mulheres que valorizam o autocuidado, a beleza e o bem-estar, buscando produtos de qualidade que realcem sua beleza natural com elegância e segurança.</p>
+             </div>
+
+            <section class="category-section"></section>
+             <div class="category-card">
+                <h1>O que faz a nossa marca única</h1>
+                <p>Nossa marca une fragrâncias marcantes, ingredientes de qualidade e cuidados com a pele em uma única experiência.</p>
+               <p>Cada produto é desenvolvido para proporcionar bem-estar, elevar a autoestima e destacar a beleza natural, permitindo que cada cliente expresse sua personalidade com confiança e elegância</p> 
+             </div>
+             <section class="category-section"></section>
+             <div class="category-card">
+                <h1>Contato</h1>
+                <p>Numero : +331 84 0150911</p>
+                <p>e-mail : claritylab09@gmail.com</p>
+</body>
+</html>
