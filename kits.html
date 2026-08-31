@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kits | Clarity Lab</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="header-main">
+            <button class="menu-toggle" type="button" aria-label="Abrir menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <a class="logo" href="index.html">
+                <img src="assets/images/Mídia.jpeg" alt="Logo">
+            </a>
+
+            <div class="busca">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input id="searchInput" type="search" placeholder="Buscar produtos...">
+            </div>
+
+            <div class="header-actions">
+                <div class="carrinho">
+                    <img src="assets/images/carrinho.png" alt="Carrinho">
+                </div>
+
+                <button class="usuario" id="userButton" type="button" aria-label="Configurar conta do usu�rio">
+                    <img src="assets/images/Úsuario.webp" alt="Usuário">
+                    <span id="userName">Usu�rio</span>
+                </button>
+            </div>
+            <div class="Marca-da-agua">
+            <img src="assets/images/logo 3.png" alt="Marca da água">
+        </div>
+        </div>
+
+        <nav class="menu-mobile" id="menu-mobile">
+            <a href="index.html">Início</a>
+            <a href="BodySplash.html">Body Splashs</a>
+            <a href="cremes.html">Cremes</a>
+            <a href="sabonetes.html">Sabonetes</a>
+            <a href="kits.html">Kits</a>
+            <a href="favoritos.html">Favoritos</a>
+            <a href="sobre.html">Sobre</a>
+        </nav>
+    </header>
+
+    <script src="assets/js/cart.js"></script>
+    <script src="assets/js/search.js"></script>
+    <script>
+        const toggleButton = document.querySelector('.menu-toggle');
+        const mobileMenu = document.querySelector('.menu-mobile');
+
+        if (toggleButton && mobileMenu) {
+            toggleButton.addEventListener('click', () => {
+                const isOpen = mobileMenu.classList.toggle('open');
+                toggleButton.setAttribute('aria-expanded', isOpen);
+            });
+        }
+
+        const userButton = document.querySelector('#userButton');
+        const userName = document.querySelector('#userName');
+
+        function loadUserName() {
+            const savedName = localStorage.getItem('userName');
+            if (savedName && userName) {
+                userName.textContent = savedName;
+            }
+        }
+
+        function updateUserName() {
+            const currentName = localStorage.getItem('userName') || 'Usu�rio';
+            const newName = prompt('Digite o nome da conta:', currentName);
+            if (newName !== null) {
+                const formatted = newName.trim() || 'Usu�rio';
+                localStorage.setItem('userName', formatted);
+                if (userName) {
+                    userName.textContent = formatted;
+                }
+            }
+        }
+
+        if (userButton) {
+            userButton.addEventListener('click', updateUserName);
+        }
+
+        loadUserName();
+    </script>
+
+    <main>
+        <section class="category-section">
+            <div class="category-card">
+                <h1>Kits</h1>
+            </div>
+            <div class="products-grid category-products-grid">
+                <article class="product-card">
+                    <img src="assets/images/kiMorango.png" alt="Kit de Morango" />
+                    <h2>Kit de Morango</h2>
+                    <p>Kit completo com fragrância doce e irresistível para cuidar do corpo com conforto e sofisticação.</p>
+                    <span class="product-price">R$ 89,90</span>
+                    <div class="product-actions">
+                        <button class="favorite-btn" type="button" aria-label="Favoritar Kit de Morango">♡</button>
+                        <button class="add-to-cart-btn" type="button">Adicionar ao carrinho</button>
+                    </div>
+                </article>
+
+                <article class="product-card">
+                    <img src="assets/images/KitMaracuja.png" alt="Kit de Maracujá" />
+                    <h2>Kit de Maracujá</h2>
+                    <p>Kit refrescante com aroma tropical e leveza para uma rotina de autocuidado acolhedora.</p>
+                    <span class="product-price">R$ 92,90</span>
+                    <div class="product-actions">
+                        <button class="favorite-btn" type="button" aria-label="Favoritar Kit de Maracujá">♡</button>
+                        <button class="add-to-cart-btn" type="button">Adicionar ao carrinho</button>
+                    </div>
+                </article>
+            </div>
+        </section>
+        <script>
+        const favoriteButtons = document.querySelectorAll('.favorite-btn');
+        const favoriteProducts = JSON.parse(localStorage.getItem('favorites') || '[]');
+
+        function saveFavorites() {
+            localStorage.setItem('favorites', JSON.stringify(favoriteProducts));
+        }
+
+        favoriteButtons.forEach(button => {
+            const productCard = button.closest('.product-card');
+            const name = productCard?.querySelector('h2')?.textContent?.trim() || '';
+            const description = productCard?.querySelector('p')?.textContent?.trim() || '';
+            const image = productCard?.querySelector('img')?.getAttribute('src') || '';
+
+            if (favoriteProducts.some(item => item.name === name)) {
+                button.classList.add('active');
+                button.textContent = '♥';
+            }
+
+            button.addEventListener('click', (event) => {
+                event.preventDefault();
+
+                const isActive = button.classList.toggle('active');
+                button.textContent = isActive ? '♥' : '♡';
+                button.setAttribute('aria-pressed', String(isActive));
+
+                if (isActive) {
+                    if (!favoriteProducts.some(item => item.name === name)) {
+                        favoriteProducts.push({ name, description, image });
+                    }
+                } else {
+                    const index = favoriteProducts.findIndex(item => item.name === name);
+                    if (index !== -1) {
+                        favoriteProducts.splice(index, 1);
+                    }
+                }
+
+                saveFavorites();
+            });
+        });
+        </script>
+    </body>
+</main>
+</html>
